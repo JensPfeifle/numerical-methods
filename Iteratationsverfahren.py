@@ -31,19 +31,15 @@ def jacobi_method(A, b, x0=None, eps=0.0001, maxiter=10000):
     b = b.astype(np.float64)
     A = A.astype(np.float64)
     for k in range(0, maxiter):
-        # print('x', x)
         r = la.norm(A.dot(x) - b, ord=2)
-        # print('r', r)
         if r < eps:
             break
         else:
             xk = x.copy()
             k = k + 1
             for m in range(ndims):
-                # print('m', m)
                 summe = 0
                 for n in range(0, ndims):
-                    # print('n', n)
                     if n != m:
                         summe += A[m, n] * xk[n]
                 x[m] = (b[m] - summe) / A[m, m]
@@ -61,22 +57,17 @@ def gauss_seidel_method(A, b, x0=None, eps=0.1, maxiter=10000):
     b = b.astype(np.float64)
     A = A.astype(np.float64)
     for k in range(0, maxiter):
-        # print('x', x)
         r = la.norm(A.dot(x) - b, ord=2)
-        # print('r', r)
         if r < eps:
             break
         else:
             xk = x.copy()
             k = k + 1
             for m in range(ndims):
-                # print('m', m)
                 summe = 0
                 for n in range(0, m):
-                    # print('n', n)
                         summe += A[m, n] * x[n]
                 for n in range(m+1, ndims):
-                    # print('n', n)
                     if n != m:
                         summe += A[m, n] * xk[n]
                 x[m] = (b[m] - summe) / A[m, m]
@@ -84,19 +75,18 @@ def gauss_seidel_method(A, b, x0=None, eps=0.1, maxiter=10000):
     return x, k, r
 
 
-def plot_solve(ax, solver, A, b, x0, color='gray'):
+def plot_solve(ax, solver, A, b, x0, **kwargs):
     oldx = x0
     x, k, eps = solver(A, b, x0=x0, maxiter=1)
     dx, dy = x - oldx
     x_, y_ = oldx
-    # ax.scatter(x_, y_, color='r')
-    ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, color=color)
+    ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **kwargs)
     while eps > 0.3:
         oldx = x.copy()
         x, k, eps = solver(A, b, x0=x, maxiter=1)
         dx, dy = x - oldx
         x_, y_ = oldx
-        ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, color=color)
+        ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **kwargs)
     finalx, finaly = x
     ax.scatter(finalx, finaly, color='g')
     return ax
