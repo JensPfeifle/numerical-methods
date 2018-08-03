@@ -1,9 +1,10 @@
-# lineare ausgleichsrechnung
+""" Lineare Ausgleichsrechnung """
+
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.linalg as la
 
-# listener_x, listener_y, tan_alpha (est. angle to bird call)
+# list of tuples (listener_x, listener_y, tan_alpha (est. angle to bird call))
 data = [(8, 0, 1), (22, 7, -0.5), (36, 18, 0.5), (10, 20, -1), (13, 10, 0)]
 
 x = [x for x, y, tana in data]
@@ -28,6 +29,7 @@ ATb = A.T.dot(b)
 bird_x, bird_y = la.solve(ATA, ATb)
 
 
+# Plotting
 pointer_len = 20
 for x0, y0, tana in data:
     x_s = x0 - pointer_len / 2 * np.cos(np.arctan(tana))
