@@ -3,22 +3,6 @@ import numpy as np
 import numpy.linalg as la
 
 
-def plot_2d_unit(ax, scale=1):
-    assert (ax.name == 'rectilinear')
-    L = scale * 1
-    ax.arrow(0, 0, 0, L, color='gray', head_width=0.1, head_length=0.1)
-    ax.arrow(0, 0, L, 0, color='gray', head_width=0.1, head_length=0.1)
-    return ax
-
-
-def plot_2d_vectors(ax, vectors, **plotargs):
-    assert (ax.name == 'rectilinear')
-    num_vectors = vectors.shape[1]
-    for n in range(num_vectors):
-        this_vect = vectors[:, n]
-        ax.arrow(0, 0, this_vect[0], this_vect[1], head_width=0.1, head_length=0.1, **plotargs)
-    return ax
-
 
 def jacobi_method(A, b, x0=None, eps=0.1, maxiter=10000):
     assert (A.shape[1] == len(b))
@@ -66,15 +50,8 @@ def gauss_seidel_method(A, b, x0=None, eps=0.1, maxiter=10000):
             for m in range(ndims):
                 summe = 0
                 for n in range(0, m):
-<<<<<<< HEAD
-                        summe += A[m, n] * x[n]
-                for n in range(m+1, ndims):
-=======
-                    # print('n', n)
                     summe += A[m, n] * x[n]
                 for n in range(m + 1, ndims):
-                    # print('n', n)
->>>>>>> 36306a0c1d4ebc99c6794184eadc28cf030f99da
                     if n != m:
                         summe += A[m, n] * xk[n]
                 x[m] = (b[m] - summe) / A[m, m]
@@ -82,9 +59,6 @@ def gauss_seidel_method(A, b, x0=None, eps=0.1, maxiter=10000):
     return x, k, r
 
 
-<<<<<<< HEAD
-def plot_solve(ax, solver, A, b, x0, **kwargs):
-=======
 def GMRES_method(A, b, B, x0=None, eps=0.1, maxiter=100):
     assert (A.shape[1] == len(b))
     ndims = len(b)
@@ -118,36 +92,6 @@ def GMRES_method(A, b, B, x0=None, eps=0.1, maxiter=100):
     print('v', v)
 
     return v
-
-
-def plot_solve(ax, solver, A, b, x0, **plotargs):
->>>>>>> 36306a0c1d4ebc99c6794184eadc28cf030f99da
-    oldx = x0
-    x, k, eps = solver(A, b, x0=x0, maxiter=1)
-    dx, dy = x - oldx
-    x_, y_ = oldx
-<<<<<<< HEAD
-    ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **kwargs)
-=======
-    # ax.scatter(x_, y_, color='r')
-    ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **plotargs)
->>>>>>> 36306a0c1d4ebc99c6794184eadc28cf030f99da
-    while eps > 0.3:
-        oldx = x.copy()
-        x, k, eps = solver(A, b, x0=x, maxiter=1)
-        dx, dy = x - oldx
-        x_, y_ = oldx
-<<<<<<< HEAD
-        ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **kwargs)
-=======
-        ax.arrow(x_, y_, dx, dy, head_width=0.1, head_length=0.1, **plotargs)
->>>>>>> 36306a0c1d4ebc99c6794184eadc28cf030f99da
-    finalx, finaly = x
-    ax.scatter(finalx, finaly, color='g')
-    return ax
-
-
-2
 
 if __name__ == '__main__':
     A = np.array([[2, 1], [-1, 2]])
